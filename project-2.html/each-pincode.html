@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pincode Search Results</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f0f4f8;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 30px;
+            background-color: #fff;
+            border-radius: 8px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #4CAF50;
+            font-size: 2rem;
+            margin-bottom: 30px;
+        }
+
+        .result-item {
+            margin-bottom: 20px;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-radius: 6px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .result-item strong {
+            color: #4CAF50;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Pincode Search Results</h1>
+        <div id="pincodeResults"></div>
+    </div>
+
+    <script>
+        const searchResults = JSON.parse(localStorage.getItem('searchResults'));
+        console.log(searchResults);
+
+        if (searchResults && searchResults.type === 'pincode') {
+            const postOffices = searchResults.data;
+            console.log(postOffices);
+            
+            
+            let resultHTML = '';
+            postOffices.forEach(postOffice => {
+                resultHTML += `
+                    <div class="result-item">
+                        <strong>Area:</strong> ${postOffice.Name} <br>
+                        <strong>Pincode:</strong> ${postOffice.Pincode} <br>
+                        <strong>District:</strong> ${postOffice.District} <br>
+                        <strong>State:</strong> ${postOffice.State} <br>
+                    </div>
+                `;
+            });
+            document.getElementById('pincodeResults').innerHTML = resultHTML;
+        } else {
+            document.getElementById('pincodeResults').innerHTML = "No results found.";
+        }
+
+        // localStorage.removeItem('searchResults');
+    </script>
+
+</body>
+</html>
